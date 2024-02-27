@@ -1,0 +1,43 @@
+<div class="container">
+    <h1 *ngIf="prestamo.id == null">Crear prestamo</h1>
+    <h1 *ngIf="prestamo.id != null">Modificar prestamo</h1>
+
+    <form>
+        <mat-form-field>
+            <mat-label>Identificador</mat-label>
+            <input type="text" matInput placeholder="Identificador" [(ngModel)]="prestamo.id" name="id" disabled>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Cliente</mat-label>
+            <mat-select disableRipple [(ngModel)]="prestamo.clients" name="client" required>
+                <mat-option *ngFor="let client of clientes" [value]="client">{{client.name}}</mat-option>
+            </mat-select>
+            <mat-error>El cliente no puede estar vacío</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Juego</mat-label>
+            <mat-select disableRipple [(ngModel)]="prestamo.game" name="game" required>
+                <mat-option *ngFor="let game of games" [value]="game">{{game.title}}</mat-option>
+            </mat-select>
+            <mat-error>El juego no puede estar vacío</mat-error>
+        </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Fechas de préstamo</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate placeholder="Inicio prestamo" [(ngModel)]="prestamo.fechainicio" name="fechainicio" required>
+                    <input matEndDate placeholder="Devolucion prestamo" [(ngModel)]="prestamo.fechadevolucion" name="fechadevolucion" required>
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker startView="month"></mat-date-range-picker>
+            </mat-form-field>
+
+    </form>
+
+    <div class="buttons">
+        <button mat-stroked-button (click)="onClose()">Cerrar</button>
+        <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+    </div>
+</div>
